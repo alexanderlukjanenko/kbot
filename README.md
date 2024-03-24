@@ -3,7 +3,7 @@
 Basic Telegram bot.
 
 ## Install
-You will find it at [t.me/oluk_kbot_bot](t.me/oluk_kbot_bot)
+You will find it at [t.me/oluk_kbot_bot](https://t.me/oluk_kbot_bot)
 
 ## Commands
 
