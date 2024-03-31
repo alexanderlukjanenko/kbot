@@ -7,9 +7,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	
 )
-
 
 var versionNumber = "0.0.1"
 
