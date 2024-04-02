@@ -52,3 +52,4 @@ push:
 
 clean:
 	rm -rf build/*
+	docker rmi ${IMAGE_TAG}
