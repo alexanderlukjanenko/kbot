@@ -2,7 +2,9 @@ FROM quay.io/projectquay/golang:1.20 as builder
 
 WORKDIR /go/src/app
 COPY . . 
-RUN make build 
+ARG os=windows
+ARG arch=386
+RUN make build TARGETOS=$os TARGETARCH=$arch
 
 
 
