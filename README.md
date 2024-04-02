@@ -1,4 +1,4 @@
-# Kbot
+# teleBot
 
 Basic Telegram bot.
 
