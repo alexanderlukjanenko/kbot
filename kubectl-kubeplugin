@@ -1,0 +1,92 @@
+#!/bin/bash
+
+RED='\033[0;31m'
+WHITE='\033[1;37m'
+NC='\033[0m' # No Color
+LINE=--------------------------------------------------------------------------------
+
+
+if ! command -v jq &> /dev/null
+then
+    echo "jq could not be found"
+    echo "Install the jq command-line JSON processor https://jqlang.github.io/jq/"
+    exit 1
+fi
+
+if [[ $* == *--help* ]]
+then
+  echo "kubeplugin kubectl plugin is a bash alternative to the ktop"
+  echo ""
+  echo "By default show nodes and pods for all namespaces."
+  echo -e "Example: ${WHITE}kubectl kubeplugin${NC}"
+  echo ""
+  echo "Set namespace name as a parameter to filter output."
+  echo -e "Example: ${WHITE}kubectl kubeplugin kube-system${NC}"
+  exit 1
+fi
+
+# Define command-line arguments
+
+# RESOURCE_TYPE=pod
+
+
+# Get cluster info
+CONTEXT=$(kubectl config current-context)
+USER=$(kubectl auth whoami -o json | jq -r ".status.userInfo.username")
+NAMESPACE="${1:-all}"
+API=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CONTEXT\")].cluster.server}")
+VERSION=$(kubectl version -o json | jq -r ".serverVersion.gitVersion")
+
+echo $LINE
+echo -e "namespace: ${RED}$NAMESPACE${NC} | api: ${WHITE}$API${NC} | ver: ${WHITE}$VERSION${NC} | cont: ${WHITE}$CONTEXT${NC} | user: ${WHITE}$USER${NC}"
+echo $LINE
+
+# Retrieve resource usage statistics from Kubernetes
+# get nodes
+echo ""
+echo "NODES:"
+echo $LINE
+kubectl top node | tail -n +2 | while read line
+do
+  # Extract CPU and memory usage from the output
+  NAME=$(echo $line | awk '{print $1}')
+  CPU=$(echo $line | awk '{print $2}')
+  MEMORY=$(echo $line | awk '{print $3}')
+
+  # Output the statistics to the console
+  # "Resource, Namespace, Name, CPU, Memory"
+
+  echo "$NAME, $CPU, $MEMORY"
+done
+
+echo $LINE
+echo ""
+echo "PODS:"
+echo $LINE
+
+if [[ $NAMESPACE = "all" ]]
+then
+  NAMESPACE_OPTION="-A"
+  kubectl top pod $NAMESPACE_OPTION | tail -n +2 | while read line
+  do
+    NAME=$(echo $line | awk '{print $2}')
+    CPU=$(echo $line | awk '{print $3}')
+    MEMORY=$(echo $line | awk '{print $4}')
+
+    printf "%-50s %10s %10s \n" $NAME $CPU $MEMORY
+  done
+else 
+  NAMESPACE_OPTION="-n $NAMESPACE"
+  kubectl top pod $NAMESPACE_OPTION | tail -n +2 | while read line
+  do
+    NAME=$(echo $line | awk '{print $1}')
+    CPU=$(echo $line | awk '{print $2}')
+    MEMORY=$(echo $line | awk '{print $3}')
+
+    printf "%-50s %10s %10s \n" $NAME $CPU $MEMORY
+  done
+fi
+
+
+echo $LINE
+
