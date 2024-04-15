@@ -5,10 +5,18 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: olukyanenko/app
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v1.0.1-amd64"
+  arch: amd64
+
+secret:
+  name: "helm"
+  env: "TELE_TOKEN"
+  key: "token"
+securityContext:
+  privileged: true
 
 imagePullSecrets: []
 nameOverride: ""
@@ -31,7 +39,7 @@ podLabels: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: {}
+# securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
