@@ -1,9 +1,9 @@
-APP=$(shell basename $(shell git remote get-url origin))
+APP?=$(shell basename $(shell git remote get-url origin))
 REGISTRY?=ghcr.io/alexanderlukjanenko
-VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
+VERSION?=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETOS?=linux
 TARGETARCH?=arm64
-IMAGE_TAG=$(shell echo ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} | tr A-Z a-z)
+IMAGE_TAG?=$(shell echo ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} | tr A-Z a-z)
 
 build = CGO_ENABLED=0 GOOS=$(1) GOARCH=$(2) go build -v -o build/kbot -ldflags "-X="kbot/cmd.versionNumber=$(3)
 mass_build = CGO_ENABLED=0 GOOS=$(1) GOARCH=$(2) go build -v -o build/${APP}_$(1)_$(2) -ldflags "-X="kbot/cmd.versionNumber=$(3)
