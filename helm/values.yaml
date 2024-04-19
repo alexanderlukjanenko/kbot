@@ -7,7 +7,7 @@ image:
   repository: olukyanenko/app
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.8-5055950"
+  tag: "v1.0.8-e9bd4e2"
   arch: amd64
 secret:
   name: "helm"
