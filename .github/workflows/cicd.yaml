@@ -1,7 +1,7 @@
 name: kbot-cicd
 
 on: 
-  push:
+  # push:
   workflow_dispatch:
 
 jobs:

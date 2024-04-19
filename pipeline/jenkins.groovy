@@ -34,5 +34,19 @@ pipeline {
                 sh 'make test'
             }
         }
+
+        stage('build') {
+            steps {
+                echo "Building binary for platform ${params.OS} on ${params.ARCH} started"
+                sh "make ${params.OS} ${params.ARCH}"
+            }
+        }
+
+        stage('image') {
+            steps {
+                echo "Building image for platform ${params.OS} on ${params.ARCH} started"
+                sh "make image-${params.OS} ${params.ARCH}"
+            }
+        }
     }
 }
