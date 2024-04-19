@@ -10,4 +10,4 @@ jobs:
 
     steps:
       - name: Test
-        uses: echo "TEST"
+        run: echo "TEST"
