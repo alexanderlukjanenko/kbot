@@ -31,6 +31,7 @@ jobs:
           APP: "kbot"
           REGISTRY: ghcr.io/${{github.actor}}
           TARGETARCH: "amd64"
+          TARGETOS: "linux"
         run: make image push
   
   cd:
