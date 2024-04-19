@@ -29,4 +29,5 @@ jobs:
         env:
           APP: "kbot"
           REGISTRY: ${{ secrets.DOCKERHUB_USERNAME }}
+          TARGETARCH: "amd64"
         run: make image push
