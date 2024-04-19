@@ -1,0 +1,13 @@
+name: kbot-cicd
+
+on: 
+  push:
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test
+        uses: echo "TEST"
