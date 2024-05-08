@@ -8,7 +8,7 @@ RUN make build TARGETOS=$os TARGETARCH=$arch
 
 
 
-FROM scratch 
+FROM golang:latest 
 WORKDIR /
 COPY --from=builder /go/src/app/kbot .
 COPY --from=alpine:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
