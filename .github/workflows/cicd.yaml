@@ -44,7 +44,6 @@ jobs:
         with:
           fetch-depth: 0
       - run: echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-      - run: echo "VERSION_CHART=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
       - uses: mikefarah/yq@master
         with:
@@ -52,7 +51,7 @@ jobs:
 
       - uses: mikefarah/yq@master
         with:
-          cmd: yq -i '.version=strenv(VERSION_CHART)' helm/Chart.yaml
+          cmd: yq -i '.version=strenv(VERSION)' helm/Chart.yaml
       
       - run: |
           git config user.name github-actions
