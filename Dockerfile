@@ -12,4 +12,4 @@ FROM scratch
 WORKDIR /
 COPY --from=builder /go/src/app/build/kbot .
 COPY --from=alpine:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-ENTRYPOINT ["./kbot", "go"]
+ENTRYPOINT ["./kbot", "start"]
