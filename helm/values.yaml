@@ -6,11 +6,10 @@ replicaCount: 1
 image:
   registry: "ghcr.io"
   repository: alexanderlukjanenko/kbot
-  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1.0.8-ea8e2b9"
-  arch: amd64
-  os: linux
+  arch: "amd64"
+  os: "linux"
 secret:
   name: "kbot"
   env: "TELE_TOKEN"
